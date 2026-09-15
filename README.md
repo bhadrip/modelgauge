@@ -65,7 +65,7 @@ The script reads the live catalog, routes every request price-first, records Ope
 
 ## Market position
 
-This is a validated but competitive category. Artificial Analysis Optima offers custom benchmarks and recommendations; Not Diamond and OpenRouter Auto route prompts; Ramp Router and Microsoft Foundry target production traffic; Braintrust and LangSmith provide deep evaluation workflows. ModelGauge should not become another inference gateway. Its sharper wedge is a transparent, local **eval-to-route-policy compiler**: use a customer’s examples, expose every cost and failure, and produce a versioned MCP policy that works with the gateway they already have. See the [market landscape](docs/market-landscape.md).
+This is a validated but competitive category. Artificial Analysis Optima offers custom benchmarks and recommendations; Not Diamond and OpenRouter Auto route prompts; DigitalOcean Gradient AI, Ramp Router, and Microsoft Foundry target production traffic; Braintrust and LangSmith provide deep evaluation workflows. ModelGauge should not become another inference gateway. Its sharper wedge is a transparent, local **eval-to-route-policy compiler**: use a customer’s examples, expose every cost and failure, and produce a versioned MCP policy that works with the gateway they already have. See the [market landscape](docs/market-landscape.md).
 
 ## Current limitations
 
