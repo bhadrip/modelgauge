@@ -14,6 +14,7 @@ The included 2026-09-14 run found GPT-5.6 Luna was the lowest-priced model to sc
 - Dependency-free MCP stdio server with three tools
 - Tests for routing logic and the MCP contract
 - Research and product reasoning in `docs/research.md`
+- Current competitor map and positioning in `docs/market-landscape.md`
 
 ## Run it
 
@@ -61,6 +62,10 @@ The script reads the live catalog, routes every request price-first, records Ope
 ## Why this shape
 
 [Artificial Analysis](https://artificialanalysis.ai/methodology) demonstrates why quality, performance, and price need to be seen together. [OpenRouter](https://openrouter.ai/docs/guides/routing/provider-selection) already provides multi-provider routing and live price/performance controls. ModelGauge’s wedge is the layer between them: workload-specific evidence and a simple “cheapest model that clears the bar” decision that an agent can call through [MCP](https://modelcontextprotocol.io/specification/2025-06-18/server/tools).
+
+## Market position
+
+This is a validated but competitive category. Artificial Analysis Optima offers custom benchmarks and recommendations; Not Diamond and OpenRouter Auto route prompts; Ramp Router and Microsoft Foundry target production traffic; Braintrust and LangSmith provide deep evaluation workflows. ModelGauge should not become another inference gateway. Its sharper wedge is a transparent, local **eval-to-route-policy compiler**: use a customer’s examples, expose every cost and failure, and produce a versioned MCP policy that works with the gateway they already have. See the [market landscape](docs/market-landscape.md).
 
 ## Current limitations
 
