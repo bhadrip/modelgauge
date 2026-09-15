@@ -1,25 +1,73 @@
 {
   "meta": {
-    "catalogDate": "2026-09-14",
+    "catalogDate": "2026-09-15",
+    "profilesVerifiedAt": "2026-09-15",
     "measuredAt": "2026-09-14T23:20:05-07:00",
     "accountedSpendUsd": 0.139573,
     "finalRunSpendUsd": 0.072365,
     "taskRuns": 18,
     "status": "measured",
     "method": "18 measured runs · price-first providers · minimal reasoning",
-    "note": "One deterministic pass per task; directional evidence, not a general leaderboard. Total spend includes a calibration run that exposed output-budget failures."
+    "note": "One deterministic pass per task; directional evidence, not a general leaderboard. Total spend includes a calibration run that exposed output-budget failures.",
+    "sourcePolicy": "Vendor documentation and first-party model cards take priority. OpenRouter supplies normalized routing, price, and capability data. Undisclosed facts are never inferred."
   },
   "models": [
     {
       "id": "qwen/qwen3.8-flash",
+      "slug": "qwen-3-8-flash",
+      "apiId": "qwen3.8-flash",
       "name": "Qwen 3.8 Flash",
       "maker": "Qwen",
       "color": "#d9ff63",
+      "summary": "A low-cost, multimodal reasoning model for coding, visual document work, and long-running agent workflows.",
+      "releaseDate": "2026-08-26",
+      "status": "Active",
       "contextLength": 1000000,
+      "maxOutputTokens": 131072,
+      "knowledgeCutoff": "Not publicly disclosed",
       "inputPerMillion": 0.15,
       "outputPerMillion": 0.47,
+      "pricingNote": "OpenRouter price snapshot. Cache read: $0.016/MTok; cache write: $0.20/MTok.",
       "bestAt": "Structured workflows",
       "strengths": "Cheapest measured option for extraction and triage; coding hit the output ceiling.",
+      "modalities": { "input": ["Text", "Image", "Video"], "output": ["Text"] },
+      "capabilities": ["Reasoning", "Tool calling", "Structured output", "Vision", "Video understanding", "Context caching"],
+      "architecture": {
+        "type": "Multimodal sparse MoE causal language model with vision encoder",
+        "parameters": "125B backbone + 51B n-gram embeddings + 4B MTP",
+        "activeParameters": "6B per token",
+        "layers": "48",
+        "details": "Hybrid Gated DeltaNet and Qwen Sparse Attention, 512 experts with 10 routed plus one shared expert, four-branch gated residuals, and a native 262K context extendable to 1M.",
+        "disclosure": "Fully described in the first-party model card and technical report."
+      },
+      "weights": {
+        "availability": "Open weights",
+        "license": "Qwen Community License 1.0",
+        "format": "FP8 safetensors",
+        "huggingFace": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next-FP8",
+        "repository": "https://github.com/QwenLM/Qwen3.8-Flash-Next"
+      },
+      "vendorBenchmarks": [
+        { "name": "SWE-bench Pro", "score": "62.5%", "category": "Agentic coding", "source": "Qwen model card" },
+        { "name": "DeepSWE 1.1", "score": "58.7%", "category": "Agentic coding", "source": "Qwen model card" },
+        { "name": "CoWorkBench", "score": "73.9", "category": "Office automation", "source": "Qwen model card" }
+      ],
+      "caveats": [
+        "Our coding probe consumed all 1,800 reasoning tokens and returned no gradeable final answer.",
+        "The Qwen Cloud API model and downloadable Flash-Next weights are closely related, but deployment settings and quantization can change results.",
+        "Qwen Community License 1.0 is a custom license; review its terms for your use case."
+      ],
+      "links": [
+        { "label": "Official Qwen guide", "url": "https://docs.qwencloud.com/developer-guides/getting-started/latest-model", "kind": "Vendor docs" },
+        { "label": "Hugging Face weights", "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next-FP8", "kind": "Weights" },
+        { "label": "GitHub repository", "url": "https://github.com/QwenLM/Qwen3.8-Flash-Next", "kind": "Code" },
+        { "label": "OpenRouter model page", "url": "https://openrouter.ai/qwen/qwen3.8-flash", "kind": "Routing" }
+      ],
+      "sources": [
+        { "label": "Qwen Cloud model guide", "url": "https://docs.qwencloud.com/developer-guides/getting-started/latest-model", "scope": "Capabilities, context, model ID, architecture summary", "checkedAt": "2026-09-15" },
+        { "label": "First-party Hugging Face model card", "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next-FP8", "scope": "Architecture, weights, license, vendor evals", "checkedAt": "2026-09-15" },
+        { "label": "OpenRouter catalog", "url": "https://openrouter.ai/qwen/qwen3.8-flash", "scope": "Price, routing ID, normalized modalities", "checkedAt": "2026-09-15" }
+      ],
       "benchmark": {
         "quality": 67,
         "medianLatencyMs": 11238,
@@ -33,14 +81,60 @@
     },
     {
       "id": "deepseek/deepseek-v4.1-flash",
+      "slug": "deepseek-v4-1-flash",
+      "apiId": "deepseek-flash",
       "name": "DeepSeek V4.1 Flash",
       "maker": "DeepSeek",
       "color": "#55d8ff",
+      "summary": "An open-weight multimodal MoE built around a cache-efficient causal encoder–decoder architecture.",
+      "releaseDate": "2026-09-10",
+      "status": "Active",
       "contextLength": 1048576,
-      "inputPerMillion": 0.3,
-      "outputPerMillion": 1.2,
+      "maxOutputTokens": 384000,
+      "knowledgeCutoff": "Not publicly disclosed",
+      "inputPerMillion": 0.15,
+      "outputPerMillion": 0.6,
+      "pricingNote": "OpenRouter rates vary by UTC schedule: $0.15–$0.30 input and $0.60–$1.20 output per MTok.",
       "bestAt": "Structured workflows",
       "strengths": "Perfect extraction and triage scores, but slow price-first routing and no coding answer within the cap.",
+      "modalities": { "input": ["Text", "Image"], "output": ["Text"] },
+      "capabilities": ["Reasoning", "Tool calling", "Structured output", "Vision", "1M context", "Self-hosting"],
+      "architecture": {
+        "type": "40-layer multimodal Mixture-of-Experts causal encoder–decoder",
+        "parameters": "552B backbone + 196B Engram conditional memory",
+        "activeParameters": "8B during prefill; 16B during decode",
+        "layers": "20-layer causal encoder + 20-layer decoder",
+        "details": "CED projects decoder KV cache from the encoder output. CSA2 sparse attention, FP4 KV caching, Single-Pass mHC residual mixing, Engram memory, and DSpark speculative decoding reduce long-context serving cost.",
+        "disclosure": "Fully described in the first-party model card and technical report."
+      },
+      "weights": {
+        "availability": "Open weights",
+        "license": "MIT",
+        "format": "Mixed BF16 / FP8 safetensors",
+        "huggingFace": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+        "repository": "https://github.com/deepseek-ai/DeepSeek-V4.1-Flash"
+      },
+      "vendorBenchmarks": [
+        { "name": "GPQA Diamond", "score": "90.9", "category": "Scientific reasoning", "source": "DeepSeek API changelog" },
+        { "name": "Terminal-Bench 2.1", "score": "90.6", "category": "Agentic terminal work", "source": "DeepSeek API changelog" },
+        { "name": "DeepSWE 1.1", "score": "74.2", "category": "Agentic coding", "source": "DeepSeek API changelog" }
+      ],
+      "caveats": [
+        "Our coding probe timed out after 120 seconds with no gradeable answer inside the 1,800-token cap.",
+        "OpenRouter pricing changes across off-peak and peak UTC windows; budget using the upper rate if timing is unpredictable.",
+        "The full checkpoint is exceptionally large even though few parameters activate per token."
+      ],
+      "links": [
+        { "label": "Official release", "url": "https://www.deepseek.com/en/news/deepseek-v4-1-flash/", "kind": "Vendor docs" },
+        { "label": "Hugging Face weights", "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash", "kind": "Weights" },
+        { "label": "API changelog", "url": "https://api-docs.deepseek.com/updates/", "kind": "API" },
+        { "label": "OpenRouter model page", "url": "https://openrouter.ai/deepseek/deepseek-v4.1-flash", "kind": "Routing" }
+      ],
+      "sources": [
+        { "label": "DeepSeek release announcement", "url": "https://www.deepseek.com/en/news/deepseek-v4-1-flash/", "scope": "Release, architecture summary, API alias", "checkedAt": "2026-09-15" },
+        { "label": "First-party Hugging Face model card", "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash", "scope": "Architecture, weights, MIT license, training, evals", "checkedAt": "2026-09-15" },
+        { "label": "OpenRouter catalog", "url": "https://openrouter.ai/deepseek/deepseek-v4.1-flash", "scope": "Scheduled price ranges, routing ID, modalities", "checkedAt": "2026-09-15" }
+      ],
       "benchmark": {
         "quality": 67,
         "medianLatencyMs": 49300,
@@ -54,18 +148,45 @@
     },
     {
       "id": "openai/gpt-5.6-luna",
+      "slug": "gpt-5-6-luna",
+      "apiId": "gpt-5.6-luna",
       "name": "GPT-5.6 Luna",
       "maker": "OpenAI",
       "color": "#ff9f68",
+      "summary": "OpenAI's fast, cost-sensitive GPT-5.6 tier for high-volume work and lightweight agents.",
+      "releaseDate": "2026-07-09",
+      "status": "Active",
       "contextLength": 1050000,
+      "maxOutputTokens": 128000,
+      "knowledgeCutoff": "2026-02-16",
       "inputPerMillion": 0.2,
       "outputPerMillion": 1.2,
+      "pricingNote": "Cached input: $0.02/MTok. Inputs over 272K tokens are billed at 2× input and 1.5× output rates.",
       "bestAt": "Best measured value",
       "strengths": "The lowest-priced model to score 100 across extraction, triage, and coding.",
+      "modalities": { "input": ["Text", "Image", "File"], "output": ["Text"] },
+      "capabilities": ["Reasoning", "Tool calling", "Structured output", "Vision", "Computer use", "Web and file search"],
+      "architecture": {
+        "type": "Proprietary GPT-5.6 family model",
+        "parameters": "Not publicly disclosed",
+        "activeParameters": "Not publicly disclosed",
+        "layers": "Not publicly disclosed",
+        "details": "OpenAI describes Luna as the cost-optimized GPT-5.6 tier and roughly analogous to the nano tier in earlier GPT-5 families.",
+        "disclosure": "Weights, parameter count, layer count, and training corpus details are not public."
+      },
+      "weights": { "availability": "Proprietary API", "license": "Commercial service terms", "format": "Not downloadable", "huggingFace": null, "repository": null },
+      "vendorBenchmarks": [],
+      "caveats": ["No downloadable weights or detailed architecture are published.", "Long prompts above 272K tokens use higher rates.", "Our perfect score is based on three narrow tasks and should be rerun on your own data."],
+      "links": [
+        { "label": "Official model documentation", "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna", "kind": "Vendor docs" },
+        { "label": "OpenRouter model page", "url": "https://openrouter.ai/openai/gpt-5.6-luna", "kind": "Routing" }
+      ],
+      "sources": [
+        { "label": "OpenAI model documentation", "url": "https://developers.openai.com/api/docs/models/gpt-5.6-luna", "scope": "Capabilities, context, cutoff, tools, pricing", "checkedAt": "2026-09-15" },
+        { "label": "OpenRouter catalog", "url": "https://openrouter.ai/openai/gpt-5.6-luna", "scope": "Routing ID and normalized modalities", "checkedAt": "2026-09-15" }
+      ],
       "benchmark": {
-        "quality": 100,
-        "medianLatencyMs": 2763,
-        "averageCostUsd": 0.000482,
+        "quality": 100, "medianLatencyMs": 2763, "averageCostUsd": 0.000482,
         "tasks": {
           "extract": { "quality": 100, "latencyMs": 2763, "costUsd": 0.000218, "reasoningTokens": 96, "provider": "OpenAI", "finishReason": "stop" },
           "triage": { "quality": 100, "latencyMs": 1740, "costUsd": 0.000172, "reasoningTokens": 44, "provider": "OpenAI", "finishReason": "stop" },
@@ -75,18 +196,51 @@
     },
     {
       "id": "google/gemini-3.8-flash",
+      "slug": "gemini-3-8-flash",
+      "apiId": "gemini-3.8-flash",
       "name": "Gemini 3.8 Flash",
       "maker": "Google",
       "color": "#8d7dff",
+      "summary": "Google's fast multimodal model for software engineering, autonomous agents, and enterprise workflows.",
+      "releaseDate": "2026-09-02",
+      "status": "Stable",
       "contextLength": 1048576,
+      "maxOutputTokens": 65536,
+      "knowledgeCutoff": "2026-03 (some domains may be limited to 2025-01)",
       "inputPerMillion": 0.75,
       "outputPerMillion": 3.75,
+      "pricingNote": "OpenRouter snapshot matches Google's introductory rate; the Google model card lists $1.50/$7.50 as regular pricing.",
       "bestAt": "Fastest measured",
       "strengths": "Fastest median in the sample with perfect triage and coding scores.",
+      "modalities": { "input": ["Text", "Image", "Video", "Audio", "PDF"], "output": ["Text"] },
+      "capabilities": ["Reasoning", "Tool calling", "Structured output", "Code execution", "Computer use preview", "Search grounding"],
+      "architecture": {
+        "type": "Proprietary Gemini 3 family multimodal model",
+        "parameters": "Not publicly disclosed",
+        "activeParameters": "Not publicly disclosed",
+        "layers": "Not publicly disclosed",
+        "details": "Google states that Gemini 3.8 Flash builds on Gemini 3.7 Flash; it does not publish the parameter or layer count in the 3.8 model card.",
+        "disclosure": "Architecture lineage is public; weights and detailed topology are not."
+      },
+      "weights": { "availability": "Proprietary API", "license": "Commercial service terms", "format": "Not downloadable", "huggingFace": null, "repository": null },
+      "vendorBenchmarks": [
+        { "name": "DeepSWE 1.1", "score": "73.7%", "category": "Long-horizon software engineering", "source": "Google model card" },
+        { "name": "Terminal-Bench 2.1", "score": "89.4%", "category": "Agentic terminal coding", "source": "Google model card" },
+        { "name": "HLE-Verified", "score": "54.9%", "category": "Expert reasoning", "source": "Google model card" }
+      ],
+      "caveats": ["Google notes possible hallucinations, occasional slowness or timeouts, and increased token use at higher effort.", "Its knowledge cutoff varies by domain according to the model card.", "The lower displayed API rate is promotional; budget for the documented regular rate unless terms confirm otherwise."],
+      "links": [
+        { "label": "Official API model page", "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash", "kind": "Vendor docs" },
+        { "label": "Google DeepMind model card", "url": "https://deepmind.google/models/model-cards/gemini-3-8-flash/", "kind": "Model card" },
+        { "label": "OpenRouter model page", "url": "https://openrouter.ai/google/gemini-3.8-flash", "kind": "Routing" }
+      ],
+      "sources": [
+        { "label": "Gemini API documentation", "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash", "scope": "Modalities, token limits, features, stable ID", "checkedAt": "2026-09-15" },
+        { "label": "Google DeepMind model card", "url": "https://deepmind.google/models/model-cards/gemini-3-8-flash/", "scope": "Release, lineage, evals, cutoff, limitations, pricing context", "checkedAt": "2026-09-15" },
+        { "label": "OpenRouter catalog", "url": "https://openrouter.ai/google/gemini-3.8-flash", "scope": "Current routed price and normalized capabilities", "checkedAt": "2026-09-15" }
+      ],
       "benchmark": {
-        "quality": 96,
-        "medianLatencyMs": 2339,
-        "averageCostUsd": 0.001061,
+        "quality": 96, "medianLatencyMs": 2339, "averageCostUsd": 0.001061,
         "tasks": {
           "extract": { "quality": 88, "latencyMs": 3067, "costUsd": 0.001205, "reasoningTokens": 224, "provider": "Google AI Studio", "finishReason": "stop" },
           "triage": { "quality": 100, "latencyMs": 880, "costUsd": 0.000302, "reasoningTokens": 0, "provider": "Google AI Studio", "finishReason": "stop" },
@@ -96,18 +250,45 @@
     },
     {
       "id": "anthropic/claude-sonnet-5",
+      "slug": "claude-sonnet-5",
+      "apiId": "claude-sonnet-5",
       "name": "Claude Sonnet 5",
       "maker": "Anthropic",
       "color": "#ff7777",
+      "summary": "Anthropic's fast frontier model, positioned as its best combination of speed and intelligence.",
+      "releaseDate": "2026-06-30",
+      "status": "Active (latest)",
       "contextLength": 1000000,
+      "maxOutputTokens": 128000,
+      "knowledgeCutoff": "2026-01",
       "inputPerMillion": 2,
       "outputPerMillion": 10,
+      "pricingNote": "Cache read: $0.20/MTok; 5-minute cache write: $2.50; 1-hour cache write: $4. Batch is 50% off.",
       "bestAt": "Premium reliability",
       "strengths": "Perfect across the suite, with a higher token price than Luna or Gemini.",
+      "modalities": { "input": ["Text", "Image", "File"], "output": ["Text"] },
+      "capabilities": ["Adaptive reasoning", "Tool calling", "Structured output", "Vision", "1M context", "Multi-cloud availability"],
+      "architecture": {
+        "type": "Proprietary Claude model with a new tokenizer",
+        "parameters": "Not publicly disclosed",
+        "activeParameters": "Not publicly disclosed",
+        "layers": "Not publicly disclosed",
+        "details": "Anthropic documents adaptive thinking as default and a new tokenizer, but does not publish the parameter count or detailed network topology.",
+        "disclosure": "Weights and detailed architecture are not public."
+      },
+      "weights": { "availability": "Proprietary API", "license": "Commercial service terms", "format": "Not downloadable", "huggingFace": null, "repository": null },
+      "vendorBenchmarks": [],
+      "caveats": ["Sampling parameters set to non-default values return a 400 error on the Claude API.", "Manual extended thinking is replaced by adaptive thinking and effort controls.", "Anthropic commits only that retirement will be no sooner than June 30, 2027."],
+      "links": [
+        { "label": "Official model documentation", "url": "https://platform.claude.com/docs/en/models/sonnet-5/overview", "kind": "Vendor docs" },
+        { "label": "OpenRouter model page", "url": "https://openrouter.ai/anthropic/claude-sonnet-5", "kind": "Routing" }
+      ],
+      "sources": [
+        { "label": "Claude Sonnet 5 documentation", "url": "https://platform.claude.com/docs/en/models/sonnet-5/overview", "scope": "Release, context, cutoff, pricing, behavior, platforms", "checkedAt": "2026-09-15" },
+        { "label": "OpenRouter catalog", "url": "https://openrouter.ai/anthropic/claude-sonnet-5", "scope": "Routing ID and normalized capabilities", "checkedAt": "2026-09-15" }
+      ],
       "benchmark": {
-        "quality": 100,
-        "medianLatencyMs": 5018,
-        "averageCostUsd": 0.003123,
+        "quality": 100, "medianLatencyMs": 5018, "averageCostUsd": 0.003123,
         "tasks": {
           "extract": { "quality": 100, "latencyMs": 5075, "costUsd": 0.002182, "reasoningTokens": 91, "provider": "Claude Platform on AWS", "finishReason": "stop" },
           "triage": { "quality": 100, "latencyMs": 2252, "costUsd": 0.001586, "reasoningTokens": 0, "provider": "Claude Platform on AWS", "finishReason": "stop" },
@@ -117,18 +298,45 @@
     },
     {
       "id": "openai/gpt-6-astra",
+      "slug": "gpt-6-astra",
+      "apiId": "gpt-6-astra",
       "name": "GPT-6 Astra",
       "maker": "OpenAI",
       "color": "#f6f8fb",
+      "summary": "OpenAI's flagship for difficult end-to-end reasoning, coding, computer use, research, and document work.",
+      "releaseDate": "2026-09-04",
+      "status": "Active",
       "contextLength": 1050000,
+      "maxOutputTokens": 128000,
+      "knowledgeCutoff": "2026-04-30",
       "inputPerMillion": 10,
       "outputPerMillion": 50,
+      "pricingNote": "Cached input: $1/MTok; cache writes: $12.50. Inputs over 272K tokens use higher rates.",
       "bestAt": "Frontier reference",
       "strengths": "Perfect across this small suite, but substantially more expensive than the other perfect scorers.",
+      "modalities": { "input": ["Text", "Image", "File"], "output": ["Text"] },
+      "capabilities": ["Deep reasoning", "Tool calling", "Structured output", "Computer use", "Hosted shell", "Web and file search"],
+      "architecture": {
+        "type": "Proprietary GPT-6 family model",
+        "parameters": "Not publicly disclosed",
+        "activeParameters": "Not publicly disclosed",
+        "layers": "Not publicly disclosed",
+        "details": "OpenAI publishes workload guidance and API capabilities, but not weights, parameter count, layer count, or a detailed topology.",
+        "disclosure": "Weights and detailed architecture are not public."
+      },
+      "weights": { "availability": "Proprietary API", "license": "Commercial service terms", "format": "Not downloadable", "huggingFace": null, "repository": null },
+      "vendorBenchmarks": [],
+      "caveats": ["Highest token price in the measured set.", "Reasoning effort does not support the none setting.", "Long prompts above 272K tokens use higher rates."],
+      "links": [
+        { "label": "Official model documentation", "url": "https://developers.openai.com/api/docs/models/gpt-6-astra", "kind": "Vendor docs" },
+        { "label": "OpenRouter model page", "url": "https://openrouter.ai/openai/gpt-6-astra", "kind": "Routing" }
+      ],
+      "sources": [
+        { "label": "OpenAI model documentation", "url": "https://developers.openai.com/api/docs/models/gpt-6-astra", "scope": "Capabilities, context, cutoff, tools, pricing", "checkedAt": "2026-09-15" },
+        { "label": "OpenRouter catalog", "url": "https://openrouter.ai/openai/gpt-6-astra", "scope": "Routing ID and normalized modalities", "checkedAt": "2026-09-15" }
+      ],
       "benchmark": {
-        "quality": 100,
-        "medianLatencyMs": 4606,
-        "averageCostUsd": 0.01826,
+        "quality": 100, "medianLatencyMs": 4606, "averageCostUsd": 0.01826,
         "tasks": {
           "extract": { "quality": 100, "latencyMs": 4606, "costUsd": 0.00815, "reasoningTokens": 49, "provider": "Azure", "finishReason": "stop" },
           "triage": { "quality": 100, "latencyMs": 2763, "costUsd": 0.00514, "reasoningTokens": 0, "provider": "OpenAI", "finishReason": "stop" },

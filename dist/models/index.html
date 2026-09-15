@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Research-backed AI model profiles with evals, pricing, architecture, modalities, weights, and primary-source links." />
+    <title>AI Model Index — ModelGauge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../" aria-label="ModelGauge home"><span class="brand-mark" aria-hidden="true">M<span>G</span></span><span>ModelGauge</span></a>
+      <nav aria-label="Primary navigation"><a href="../#compare">Compare</a><a class="nav-active" href="./">Models</a><a href="../#evidence">Evidence</a><a href="../#mcp">MCP</a></nav>
+      <div class="status"><span aria-hidden="true"></span> Primary sources checked</div>
+    </header>
+
+    <main class="catalog-main">
+      <section class="catalog-hero">
+        <p class="kicker">Model intelligence library / v1</p>
+        <h1>Everything worth knowing about a model.</h1>
+        <p class="catalog-dek">Our evals, vendor specs, architecture disclosures, current routed prices, model cards, weights, and the original sources—kept together so model selection does not begin with six open tabs.</p>
+        <div class="catalog-proof" aria-label="Catalog coverage">
+          <div><strong id="profile-count">6</strong><span>deep profiles</span></div>
+          <div><strong id="source-count">—</strong><span>cited sources</span></div>
+          <div><strong id="open-count">—</strong><span>open-weight models</span></div>
+          <div><strong id="verified-date">—</strong><span>last verified</span></div>
+        </div>
+      </section>
+
+      <section class="catalog-controls" aria-label="Model filters">
+        <label class="search-field" for="model-search"><span>Search</span><input id="model-search" type="search" placeholder="Model, maker, capability, architecture…" /></label>
+        <label for="maker-filter"><span>Maker</span><select id="maker-filter"><option value="all">All makers</option></select></label>
+        <label for="access-filter"><span>Access</span><select id="access-filter"><option value="all">All access</option><option value="open">Open weights</option><option value="api">Proprietary API</option></select></label>
+        <label for="sort-models"><span>Sort</span><select id="sort-models"><option value="quality">Measured quality</option><option value="price">Input price</option><option value="newest">Newest release</option><option value="context">Context window</option></select></label>
+      </section>
+
+      <div class="catalog-resultline"><span id="result-count">6 profiles</span><span>Vendor claims are labeled separately from ModelGauge measurements.</span></div>
+      <section class="model-card-grid" id="model-card-grid" aria-live="polite"></section>
+
+      <section class="source-policy">
+        <div><p class="kicker">Evidence standard</p><h2>Source hierarchy, visible on every page.</h2></div>
+        <p>We prefer first-party technical documentation and model cards, then use OpenRouter for normalized routing data. Each fact set carries a checked date. Missing architecture details are shown as undisclosed—not filled with estimates.</p>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true">M<span>G</span></span><span>ModelGauge</span></a>
+      <p>One profile. Original sources included.</p>
+      <p>Catalog snapshot <span id="footer-date">2026-09-15</span></p>
+    </footer>
+    <script type="module" src="./models.js"></script>
+  </body>
+</html>

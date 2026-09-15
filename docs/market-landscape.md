@@ -1,6 +1,6 @@
 # Market landscape
 
-Research date: 2026-09-14 (America/Los_Angeles)
+Research date: 2026-09-15 (America/Los_Angeles)
 
 ## Executive take
 
@@ -26,6 +26,21 @@ The strongest opening for ModelGauge is an **eval-to-route-policy compiler for a
 | [Martian](https://withmartian.github.io/martian-sdk-python/api/routers_client.html) | Trainable router | Trains a router across candidate models using representative requests and a quality judge. | Similar custom-workload routing loop. | Human-readable scorecards, deterministic graders, spend guardrails, and portable MCP policy output. |
 | [Portkey](https://portkey.ai/docs/product/observability/cost-management) / [LiteLLM](https://docs.litellm.ai/) | AI gateways | Provider abstraction, cost tracking, budgets, load balancing, fallbacks, and routing infrastructure. | They own the execution and observability plane ModelGauge would feed. | Be the evidence and policy layer above gateways instead of competing on proxy infrastructure. |
 | [Braintrust](https://www.braintrust.dev/docs/evaluate) / [LangSmith](https://docs.langchain.com/langsmith/evaluation-concepts) | Evaluation platforms | Datasets, deterministic and LLM-based scorers, side-by-side experiments, production traces, and regression monitoring. | They already make model bake-offs possible. | Turn experiment results into a small, installable model policy; optimize for agent delegation rather than general application observability. |
+
+## Model-directory market
+
+The model-profile expansion enters a second, equally established category. The benchmark is no longer a vendor comparison page; it is whether a developer can answer a model question without reopening search.
+
+| Product | What it already owns | Gap ModelGauge can target |
+| --- | --- | --- |
+| [Models.dev](https://models.dev/) | The closest data-layer competitor: an open-source, community-maintained database and API for provider-independent model facts plus provider-specific pricing, token limits, modalities, tools, licenses, weight links, and benchmarks. It is already used by OpenCode. | Pair a smaller, audited catalog with first-party source ledgers, explicit unknowns, measured failure cases, a human research interface, and direct routing decisions. Consider consuming or contributing to Models.dev rather than duplicating its breadth work. |
+| [Artificial Analysis](https://artificialanalysis.ai/models/) | The strongest independent measurement layer, covering intelligence, industry capabilities, latency, throughput, task cost, context, openness, and open-weight model size across hundreds of releases. | Own customer-specific evidence, raw task failures, original vendor links, and portable agent policies. Avoid claiming a better universal leaderboard. |
+| [OpenRouter Models](https://openrouter.ai/models) | A large deployable catalog with normalized prices, context, modalities, supported parameters, provider availability, and one-click API access. | Explain the underlying model—not just the route—and connect catalog facts to controlled workload tests. OpenRouter should remain a core data and execution partner. |
+| [Hugging Face Hub](https://huggingface.co/models) | The canonical registry for downloadable model weights, model cards, licenses, files, quantizations, community derivatives, and hosted inference. | Curate the relevant first-party card and translate it into a consistent decision record; always deep-link back rather than recreating the artifact registry. |
+
+### Product consequence
+
+“Authoritative” cannot mean “largest database” in V1. Models.dev, OpenRouter, Hugging Face, and Artificial Analysis already have scale. For ModelGauge it should mean **a defensible decision record**: one page that labels who claimed each fact, what we measured ourselves, what remains undisclosed, when it was checked, and how that evidence changes the recommended route.
 
 ## Positioning recommendation
 

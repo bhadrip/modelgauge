@@ -69,6 +69,7 @@ function renderRecommendation(explicitModel = null) {
   document.querySelector("#fallback-name").textContent = fallback.name;
   document.querySelector("#fallback-note").textContent = fallback.benchmark ? `${taskQuality(fallback, app.task)}/100 · ${formatLatency(taskLatency(fallback, app.task))}` : "Next-lowest live price";
   document.querySelector("#confidence").textContent = quality === null ? "Catalog fit" : metBar ? "Clears your bar" : "Best available";
+  document.querySelector("#result-profile-link").href = `./models/${selected.slug}/`;
   document.querySelector("#result-reason").textContent = quality === null
     ? `${selected.strengths} The sample quality run is still in progress.`
     : `${selected.strengths} It scored ${quality}/100 on the matching sample task at about ${money.format(runCost)} per run.`;
@@ -79,7 +80,7 @@ function renderTable() {
   body.innerHTML = app.data.models.map((model) => {
     const quality = taskQuality(model, app.task);
     return `<tr tabindex="0" data-model-id="${model.id}">
-      <td><div class="table-model"><span class="table-dot" style="--model-color:${model.color}"></span>${model.name}</div></td>
+      <td><a class="table-model" href="./models/${model.slug}/"><span class="table-dot" style="--model-color:${model.color}"></span>${model.name}</a></td>
       <td>${model.bestAt}</td>
       <td class="quality-cell">${quality === null ? '<span class="pending">Pending</span>' : `<span class="mono">${quality}/100</span><div class="quality-bar"><i style="width:${quality}%"></i></div>`}</td>
       <td class="mono">${formatLatency(taskLatency(model, app.task))}</td>
@@ -101,6 +102,7 @@ function renderTable() {
       }
     });
   });
+  body.querySelectorAll("a").forEach((anchor) => anchor.addEventListener("click", (event) => event.stopPropagation()));
 }
 
 function renderMeta() {

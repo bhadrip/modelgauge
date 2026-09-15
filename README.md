@@ -2,19 +2,21 @@
 
 ModelGauge answers a practical question: **what is the least expensive model that can reliably do this particular job?**
 
-V1 is a working decision console plus a local MCP server. It combines current OpenRouter pricing with a small, reproducible benchmark across invoice extraction, support triage, and a bounded coding task. The output is a primary model, fallback, estimated run cost, measured wall-clock latency, and an explicit evidence caveat.
+V1 is a working decision console, a sourced model intelligence library, and a local MCP server. It combines current OpenRouter pricing with a small, reproducible benchmark across invoice extraction, support triage, and a bounded coding task. The output is a primary model, fallback, estimated run cost, measured wall-clock latency, and an explicit evidence caveat.
 
 The included 2026-09-14 run found GPT-5.6 Luna was the lowest-priced model to score 100/100 across all three tasks. Qwen 3.8 Flash was cheaper for extraction and triage but produced no gradeable coding answer inside the fixed output budget. Gemini 3.8 Flash was the fastest measured model and scored 96/100 overall. Total experiment spend, including one calibration pass, was **$0.139573**.
 
 ## What is included
 
 - Interactive comparison site in `dist/`
+- Searchable model index and six dedicated profiles with architecture, modalities, pricing, weights, vendor evals, caveats, and dated sources
 - Six-model OpenRouter experiment with deterministic graders
 - Shared recommendation engine in `lib/engine.mjs`
 - Dependency-free MCP stdio server with three tools
 - Tests for routing logic and the MCP contract
 - Research and product reasoning in `docs/research.md`
 - Current competitor map and positioning in `docs/market-landscape.md`
+- Model-profile sourcing rules in `docs/model-profiles.md`
 
 ## Run it
 
@@ -69,4 +71,4 @@ This is a validated but competitive category. Artificial Analysis Optima offers 
 
 ## Current limitations
 
-This is intentionally a V1. The checked-in benchmark is one pass on three small tasks, so it should guide a shortlist—not approve a production migration on its own. A next version should accept a customer dataset, generate holdout cases, add repeated runs and confidence intervals, and continuously refresh price and provider telemetry.
+This is intentionally a V1. The checked-in benchmark is one pass on three small tasks, so it should guide a shortlist—not approve a production migration on its own. The current library has six deep profiles rather than thousands of shallow rows. A next version should automate catalog ingestion, accept a customer dataset, generate holdout cases, add repeated runs and confidence intervals, and continuously refresh price and provider telemetry.

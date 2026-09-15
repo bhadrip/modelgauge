@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://modelgauge-v1.bhadrip.chatgpt.site/sitemap.xml
