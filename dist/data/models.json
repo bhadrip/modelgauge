@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "catalogDate": "2026-09-14",
+    "measuredAt": "2026-09-14T23:20:05-07:00",
+    "accountedSpendUsd": 0.139573,
+    "finalRunSpendUsd": 0.072365,
+    "taskRuns": 18,
+    "status": "measured",
+    "method": "18 measured runs · price-first providers · minimal reasoning",
+    "note": "One deterministic pass per task; directional evidence, not a general leaderboard. Total spend includes a calibration run that exposed output-budget failures."
+  },
+  "models": [
+    {
+      "id": "qwen/qwen3.8-flash",
+      "name": "Qwen 3.8 Flash",
+      "maker": "Qwen",
+      "color": "#d9ff63",
+      "contextLength": 1000000,
+      "inputPerMillion": 0.15,
+      "outputPerMillion": 0.47,
+      "bestAt": "Structured workflows",
+      "strengths": "Cheapest measured option for extraction and triage; coding hit the output ceiling.",
+      "benchmark": {
+        "quality": 67,
+        "medianLatencyMs": 11238,
+        "averageCostUsd": 0.000452,
+        "tasks": {
+          "extract": { "quality": 100, "latencyMs": 11238, "costUsd": 0.00032, "reasoningTokens": 514, "provider": "Alibaba", "finishReason": "stop" },
+          "triage": { "quality": 100, "latencyMs": 5828, "costUsd": 0.000169, "reasoningTokens": 217, "provider": "Alibaba", "finishReason": "stop" },
+          "code": { "quality": 0, "latencyMs": 34571, "costUsd": 0.000868, "reasoningTokens": 1800, "provider": "Alibaba", "finishReason": "length" }
+        }
+      }
+    },
+    {
+      "id": "deepseek/deepseek-v4.1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "maker": "DeepSeek",
+      "color": "#55d8ff",
+      "contextLength": 1048576,
+      "inputPerMillion": 0.3,
+      "outputPerMillion": 1.2,
+      "bestAt": "Structured workflows",
+      "strengths": "Perfect extraction and triage scores, but slow price-first routing and no coding answer within the cap.",
+      "benchmark": {
+        "quality": 67,
+        "medianLatencyMs": 49300,
+        "averageCostUsd": 0.000744,
+        "tasks": {
+          "extract": { "quality": 100, "latencyMs": 49300, "costUsd": 0.000479, "reasoningTokens": 469, "provider": "Morph", "finishReason": "stop" },
+          "triage": { "quality": 100, "latencyMs": 33895, "costUsd": 0.000214, "reasoningTokens": 134, "provider": "Morph", "finishReason": "stop" },
+          "code": { "quality": 0, "latencyMs": 120015, "costUsd": 0.001538, "reasoningTokens": 1800, "provider": "Morph", "finishReason": "length" }
+        }
+      }
+    },
+    {
+      "id": "openai/gpt-5.6-luna",
+      "name": "GPT-5.6 Luna",
+      "maker": "OpenAI",
+      "color": "#ff9f68",
+      "contextLength": 1050000,
+      "inputPerMillion": 0.2,
+      "outputPerMillion": 1.2,
+      "bestAt": "Best measured value",
+      "strengths": "The lowest-priced model to score 100 across extraction, triage, and coding.",
+      "benchmark": {
+        "quality": 100,
+        "medianLatencyMs": 2763,
+        "averageCostUsd": 0.000482,
+        "tasks": {
+          "extract": { "quality": 100, "latencyMs": 2763, "costUsd": 0.000218, "reasoningTokens": 96, "provider": "OpenAI", "finishReason": "stop" },
+          "triage": { "quality": 100, "latencyMs": 1740, "costUsd": 0.000172, "reasoningTokens": 44, "provider": "OpenAI", "finishReason": "stop" },
+          "code": { "quality": 100, "latencyMs": 9831, "costUsd": 0.001056, "reasoningTokens": 434, "provider": "OpenAI", "finishReason": "stop" }
+        }
+      }
+    },
+    {
+      "id": "google/gemini-3.8-flash",
+      "name": "Gemini 3.8 Flash",
+      "maker": "Google",
+      "color": "#8d7dff",
+      "contextLength": 1048576,
+      "inputPerMillion": 0.75,
+      "outputPerMillion": 3.75,
+      "bestAt": "Fastest measured",
+      "strengths": "Fastest median in the sample with perfect triage and coding scores.",
+      "benchmark": {
+        "quality": 96,
+        "medianLatencyMs": 2339,
+        "averageCostUsd": 0.001061,
+        "tasks": {
+          "extract": { "quality": 88, "latencyMs": 3067, "costUsd": 0.001205, "reasoningTokens": 224, "provider": "Google AI Studio", "finishReason": "stop" },
+          "triage": { "quality": 100, "latencyMs": 880, "costUsd": 0.000302, "reasoningTokens": 0, "provider": "Google AI Studio", "finishReason": "stop" },
+          "code": { "quality": 100, "latencyMs": 2339, "costUsd": 0.001677, "reasoningTokens": 0, "provider": "Google AI Studio", "finishReason": "stop" }
+        }
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-5",
+      "name": "Claude Sonnet 5",
+      "maker": "Anthropic",
+      "color": "#ff7777",
+      "contextLength": 1000000,
+      "inputPerMillion": 2,
+      "outputPerMillion": 10,
+      "bestAt": "Premium reliability",
+      "strengths": "Perfect across the suite, with a higher token price than Luna or Gemini.",
+      "benchmark": {
+        "quality": 100,
+        "medianLatencyMs": 5018,
+        "averageCostUsd": 0.003123,
+        "tasks": {
+          "extract": { "quality": 100, "latencyMs": 5075, "costUsd": 0.002182, "reasoningTokens": 91, "provider": "Claude Platform on AWS", "finishReason": "stop" },
+          "triage": { "quality": 100, "latencyMs": 2252, "costUsd": 0.001586, "reasoningTokens": 0, "provider": "Claude Platform on AWS", "finishReason": "stop" },
+          "code": { "quality": 100, "latencyMs": 5018, "costUsd": 0.0056, "reasoningTokens": 0, "provider": "Claude Platform on AWS", "finishReason": "stop" }
+        }
+      }
+    },
+    {
+      "id": "openai/gpt-6-astra",
+      "name": "GPT-6 Astra",
+      "maker": "OpenAI",
+      "color": "#f6f8fb",
+      "contextLength": 1050000,
+      "inputPerMillion": 10,
+      "outputPerMillion": 50,
+      "bestAt": "Frontier reference",
+      "strengths": "Perfect across this small suite, but substantially more expensive than the other perfect scorers.",
+      "benchmark": {
+        "quality": 100,
+        "medianLatencyMs": 4606,
+        "averageCostUsd": 0.01826,
+        "tasks": {
+          "extract": { "quality": 100, "latencyMs": 4606, "costUsd": 0.00815, "reasoningTokens": 49, "provider": "Azure", "finishReason": "stop" },
+          "triage": { "quality": 100, "latencyMs": 2763, "costUsd": 0.00514, "reasoningTokens": 0, "provider": "OpenAI", "finishReason": "stop" },
+          "code": { "quality": 100, "latencyMs": 13521, "costUsd": 0.04149, "reasoningTokens": 215, "provider": "Azure", "finishReason": "stop" }
+        }
+      }
+    }
+  ]
+}

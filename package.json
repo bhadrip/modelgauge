@@ -1,0 +1,16 @@
+{
+  "name": "modelgauge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Task-aware AI model recommendations across quality, cost, and latency.",
+  "scripts": {
+    "dev": "python3 -m http.server 4173 --directory dist",
+    "test": "node --test",
+    "benchmark": "node scripts/run-openrouter-eval.mjs",
+    "mcp": "node mcp/server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

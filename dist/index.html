@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="ModelGauge finds the least expensive AI model that can reliably handle your task."
+    />
+    <title>ModelGauge — route work, not hype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="ModelGauge home">
+        <span class="brand-mark" aria-hidden="true">M<span>G</span></span>
+        <span>ModelGauge</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#compare">Compare</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#mcp">MCP</a>
+      </nav>
+      <div class="status"><span aria-hidden="true"></span> OpenRouter catalog live</div>
+    </header>
+
+    <main id="top">
+      <section class="decision-shell" aria-labelledby="decision-title">
+        <div class="decision-heading">
+          <div>
+            <p class="kicker">Decision console / v1</p>
+            <h1 id="decision-title">Find the cheapest model that clears the bar.</h1>
+          </div>
+          <p class="heading-note">
+            Describe the work. Set the constraint. Get a model, a fallback, and the evidence behind both.
+          </p>
+        </div>
+
+        <div class="decision-grid">
+          <form class="control-panel" id="recommend-form">
+            <div class="panel-label"><span>01</span> Define the work</div>
+            <label for="task-input">What needs doing?</label>
+            <textarea id="task-input" rows="4">Extract line items and totals from messy invoices into strict JSON.</textarea>
+            <div class="preset-row" aria-label="Task presets">
+              <button class="preset active" type="button" data-task="extract">Extraction</button>
+              <button class="preset" type="button" data-task="triage">Triage</button>
+              <button class="preset" type="button" data-task="code">Small code change</button>
+            </div>
+
+            <div class="constraint-grid">
+              <div>
+                <label for="quality-range">Minimum quality <output id="quality-output">85</output></label>
+                <input id="quality-range" type="range" min="50" max="100" value="85" />
+              </div>
+              <div>
+                <label for="monthly-volume">Monthly volume</label>
+                <select id="monthly-volume">
+                  <option value="1000">1,000 runs</option>
+                  <option value="10000" selected>10,000 runs</option>
+                  <option value="100000">100,000 runs</option>
+                  <option value="1000000">1,000,000 runs</option>
+                </select>
+              </div>
+            </div>
+
+            <fieldset>
+              <legend>Optimize first for</legend>
+              <div class="priority-row">
+                <label><input type="radio" name="priority" value="cost" checked /><span>Cost</span></label>
+                <label><input type="radio" name="priority" value="quality" /><span>Quality</span></label>
+                <label><input type="radio" name="priority" value="speed" /><span>Speed</span></label>
+              </div>
+            </fieldset>
+
+            <button class="run-button" type="submit">
+              <span>Route this task</span><span aria-hidden="true">↗</span>
+            </button>
+          </form>
+
+          <aside class="result-panel" aria-live="polite" aria-labelledby="result-title">
+            <div class="result-topline">
+              <div class="panel-label"><span>02</span> Recommendation</div>
+              <span class="confidence" id="confidence">Catalog fit</span>
+            </div>
+            <div class="result-model">
+              <div class="model-monogram" id="model-monogram" aria-hidden="true">Q</div>
+              <div>
+                <p class="maker" id="result-maker">Qwen</p>
+                <h2 id="result-title">Qwen 3.8 Flash</h2>
+              </div>
+            </div>
+            <p class="result-reason" id="result-reason">
+              Lowest current token price among the short list. The sample quality run is still in progress.
+            </p>
+
+            <div class="metric-grid">
+              <div><span>Task quality</span><strong id="result-quality">—</strong></div>
+              <div><span>Wall-clock</span><strong id="result-latency">—</strong></div>
+              <div><span>Est. / run</span><strong id="result-cost">$0.0004</strong></div>
+              <div><span>At your volume</span><strong id="result-monthly">$4.00</strong></div>
+            </div>
+
+            <div class="fallback-card">
+              <span>Fallback</span>
+              <strong id="fallback-name">DeepSeek V4.1 Flash</strong>
+              <small id="fallback-note">Next-lowest live price</small>
+            </div>
+            <p class="fine-print" id="evidence-note">Live catalog pricing · benchmark running</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="compare-section" id="compare" aria-labelledby="compare-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">Measured short list</p>
+            <h2 id="compare-title">One task can have six different right answers.</h2>
+          </div>
+          <p>Click a model to inspect it. Prices are per million tokens; measured results use the same prompts and routing policy.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Best at</th>
+                <th>Quality</th>
+                <th>Latency</th>
+                <th>Input / output</th>
+                <th>Est. run</th>
+              </tr>
+            </thead>
+            <tbody id="model-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
+        <div class="evidence-copy">
+          <p class="kicker">Evidence, not vibes</p>
+          <h2 id="evidence-title">A small test with an honest confidence label.</h2>
+          <p>
+            V1 runs the same invoice extraction, support triage, and JavaScript allocation tasks once per model. Outputs are graded deterministically. It is useful directional evidence—not a universal intelligence score.
+          </p>
+          <a href="https://artificialanalysis.ai/methodology" target="_blank" rel="noreferrer">Why workload-specific benchmarks matter ↗</a>
+        </div>
+        <div class="evidence-stats">
+          <div><strong id="models-tested">6</strong><span>models</span></div>
+          <div><strong id="tasks-run">18</strong><span>task runs</span></div>
+          <div><strong id="experiment-spend">&lt; $1</strong><span>experiment spend</span></div>
+          <div><strong id="catalog-date">Today</strong><span>catalog snapshot</span></div>
+        </div>
+      </section>
+
+      <section class="mcp-section" id="mcp" aria-labelledby="mcp-title">
+        <div>
+          <p class="kicker">Agent-native by default</p>
+          <h2 id="mcp-title">Give your coding agent a model buyer.</h2>
+          <p>
+            The included local MCP server exposes <code>recommend_model</code>, <code>compare_models</code>, and <code>list_benchmarks</code>. It returns a primary model plus a fallback and explains the tradeoff.
+          </p>
+        </div>
+        <pre aria-label="MCP configuration example"><code>{
+  "mcpServers": {
+    "modelgauge": {
+      "command": "node",
+      "args": ["/path/to/modelgauge/mcp/server.mjs"]
+    }
+  }
+}</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">M<span>G</span></span><span>ModelGauge</span></div>
+      <p>Prices change. Decisions should update with them.</p>
+      <p>Catalog snapshot <span id="footer-date">2026-09-14</span></p>
+    </footer>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

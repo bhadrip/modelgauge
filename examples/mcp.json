@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "modelgauge": {
+      "command": "node",
+      "args": ["/absolute/path/to/modelgauge/mcp/server.mjs"]
+    }
+  }
+}
